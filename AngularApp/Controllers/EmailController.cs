@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Models;
 using Microsoft.AspNetCore.Mvc;
-using Services.Dtos;
 using Spire.Email.IMap;
 using Spire.Email.Pop3;
 
@@ -17,7 +17,7 @@ namespace AngularApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var emails= new List<EmailDto>();
+            var emails= new List<Email>();
             //Create a POP3 client  
             var emailClient = new ImapClient("imap.gmail.com", 993, "csci4140spring2021@gmail.com", "Pa$$word1!", ConnectionProtocols.Ssl);
             //Set host, username, password etc. for the client  
