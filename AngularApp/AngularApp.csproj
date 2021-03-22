@@ -27,7 +27,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Core.Models\Core.Models.csproj" />
     <ProjectReference Include="..\Database.EntityFramework\Database.EntityFramework.csproj" />
-    <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
