@@ -23,6 +23,31 @@
   <ItemGroup>
     <Compile Include="PythonApp.py" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="static\" />
+    <Folder Include="static\css\" />
+    <Folder Include="static\js\" />
+    <Folder Include="static\img\" />
+    <Folder Include="templates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="static\css\swagger-ui.css" />
+    <Content Include="static\css\swagger-ui.css.map" />
+    <Content Include="static\img\favicon-16x16.png" />
+    <Content Include="static\img\favicon-32x32.png" />
+    <Content Include="static\js\swagger-ui-bundle.js" />
+    <Content Include="static\js\swagger-ui-bundle.js.map" />
+    <Content Include="static\js\swagger-ui-es-bundle-core.js" />
+    <Content Include="static\js\swagger-ui-es-bundle-core.js.map" />
+    <Content Include="static\js\swagger-ui-es-bundle.js" />
+    <Content Include="static\js\swagger-ui-es-bundle.js.map" />
+    <Content Include="static\js\swagger-ui-standalone-preset.js" />
+    <Content Include="static\js\swagger-ui-standalone-preset.js.map" />
+    <Content Include="static\js\swagger-ui.js" />
+    <Content Include="static\js\swagger-ui.js.map" />
+    <Content Include="templates\oauth2-redirect.html" />
+    <Content Include="templates\swaggerui.html" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
        Visual Studio and specify your pre- and post-build commands in

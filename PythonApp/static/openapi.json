@@ -1,0 +1,31 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "SolarPredict Python REST API",
+    "description": "An API to access the CSCI6010 Group Project for Solar Energy Prediction Python Functionality."
+  },
+  "paths": {
+    "/greetings": {
+      "get": {
+        "tags": [
+          "Greetings"
+        ],
+        "description": "Returns a secret message.",
+        "responses": {
+          "200": {
+            "description": "Secret Message",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "<redacted>"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
