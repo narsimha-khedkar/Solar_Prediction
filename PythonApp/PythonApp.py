@@ -15,12 +15,13 @@ def greetings():
 @app.route('/getLocation')
 def getLocation():
     #place = input ("Enter Address :")
-    place = input ("408 Brook Pine Trl, Apex,nc")
+    place = "408 Brook Pine Trl, Apex,nc"
     geolocator = Nominatim(user_agent="SolarTest")
     location = geolocator.geocode(place)    
-    print(location)
+    print(location.longitude)
+    print(location.latitude)
 
-    return location
+    return { 'longitude': location.longitude, 'latitude': location.latitude}
 
 @app.route('/getNSRDBData')
 def getNSRDBData():
