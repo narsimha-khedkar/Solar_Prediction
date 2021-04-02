@@ -11,7 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>PythonApp</Name>
     <RootNamespace>PythonApp</RootNamespace>
-    <InterpreterId>CondaEnv|CondaEnv|solarpredict</InterpreterId>
+    <InterpreterId>CondaEnv|CondaEnv|rex</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,7 +50,7 @@
     <Content Include="templates\swaggerui.html" />
   </ItemGroup>
   <ItemGroup>
-    <InterpreterReference Include="CondaEnv|CondaEnv|solarpredict" />
+    <InterpreterReference Include="CondaEnv|CondaEnv|rex" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
