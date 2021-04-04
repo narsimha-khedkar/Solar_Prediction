@@ -11,6 +11,27 @@ export class DashboardComponent implements OnInit {
   constructor(private _gaService: GoogleAnalyticsService) {
     this._gaService.pageView("/dashboard", "Solar Predict Dashboard");
   }
+  getInputs(whichInputs?: Array<string>): object {
+    const response = {}
+    if (!whichInputs) whichInputs = ['home_inputs','panel_inputs'];
+    whichInputs.forEach(inputType => {
+      let inputContainer = document.querySelector('div[id="' + inputType + '"]');
+      let inputs = inputContainer.querySelectorAll('input');
+      inputs.forEach(input => {
+        Object.assign(response, {[input.id]: (input.value !== "") ? input.value : ""});
+      })
+    })
+    return response
+  }
+
+  getForecastingData(inputInfo: object): object {
+    return { '2021-04-15' : 1900 }
+  }
+
+  doMath(): void {
+    const inputInfo = this.getInputs();
+    const forecastData = this.getForecastingData(inputInfo);
+  }
   startAnimationForLineChart(chart) {
     let seq: any, delays: any, durations: any;
     seq = 0;

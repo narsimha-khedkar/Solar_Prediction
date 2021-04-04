@@ -389,18 +389,18 @@
                         </div>
                         <div id = "home_square_footage">
                             <label for="home_footage">Home Square Footage</label>
-                            <input name="home_footage" type="number" min="0" max="10000" value="2000" id="home_input">
+                            <input name="home_footage" type="number" min="0" max="10000" value="2000" id="home_square_footage">
                         </div>
                         <div id = "additional_footage">
                             <label for="additional">Additional Square Footage</label>
-                            <input name="additional" type="number" min="0" max="10000" value="500" id="additional_input">
+                            <input name="additional" type="number" min="0" max="10000" value="500" id="additional_square_footage">
                         </div>
                         <div id = "home_stories">
                             <label for="stories">Home Stories</label>
-                            <input name="stories" type="number" min="1" max="5" value="1" id="stories_input">
+                            <input name="stories" type="number" min="1" max="5" value="1" id="stories">
                         </div>
                         <div id = "submit_btn">
-                            <button id = "do_calculation">Perform Profitability Estimation</button>
+                            <button (click) = "doMath()" id = "do_calculation">Perform Profitability Estimation</button>
                         </div>
                       </div>
                   </div>
@@ -415,8 +415,14 @@
                   <div id = "panel_inputs">
                       <div id = "wattage_rating">
                           <label for="wattage">Wattage Rating</label>
-                          <input name="wattage" type="range" min="150" max="400" value="275" id="wattage_input">
-                      </div>
+                          <input name="wattage" type="range" min="150" max="400" value="275" id="wattage" onchange="document.getElementById('wattage_show').innerHTML = document.getElementById('wattage').value">
+                          <span id = "wattage_show">275</span> Watts
+                        </div>
+                      <div id = "derating">
+                        <label for="derate">Derating Factor</label>
+                        <input name="derate" type="range" step="0.05" min="0.0" max="1.0" value="0.85" id="derating_factor" onchange="document.getElementById('derate_show').innerHTML = document.getElementById('derating_factor').value">
+                        <span id = "derate_show">0.8</span>
+                    </div>
                     </div>
                 </div>
             </div>
