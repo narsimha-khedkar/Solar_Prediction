@@ -422,7 +422,17 @@
                         <label for="derate">Derating Factor</label>
                         <input name="derate" type="range" step="0.05" min="0.0" max="1.0" value="0.85" id="derating_factor" onchange="document.getElementById('derate_show').innerHTML = document.getElementById('derating_factor').value">
                         <span id = "derate_show">0.8</span>
-                    </div>
+                      </div>
+                      <div id = "panel_y">
+                        <label for="panel_length_inches">Panel Length (Inches)</label>
+                        <input name="panel_length_inches" type="range" step="1" min="0" max="100" value="65" id="panel_length" onchange="document.getElementById('panel_y_show').innerHTML = document.getElementById('panel_length').value">
+                        <span id = "panel_y_show">65</span> inches
+                      </div>
+                      <div id = "panel_x">
+                        <label for="panel_width_inches">Panel Width (Inches)</label>
+                        <input name="panel_width_inches" type="range" step="1" min="0" max="100" value="39" id="panel_width" onchange="document.getElementById('panel_x_show').innerHTML = document.getElementById('panel_width').value">
+                        <span id = "panel_x_show">39</span> inches
+                      </div>
                     </div>
                 </div>
             </div>

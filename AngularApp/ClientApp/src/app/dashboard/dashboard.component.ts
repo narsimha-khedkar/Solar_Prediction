@@ -55,21 +55,28 @@ export class DashboardComponent implements OnInit {
 
   doMath(): void {
     const inputInfo = this.getInputs();
-    console.log(inputInfo);
     const forecastData = this.getForecastingData(inputInfo);
-    console.log(forecastData);
     let rating = parseInt(inputInfo['wattage']) // in Watts
     let ratingKw = (parseFloat(rating.toFixed(2)) / 1000) // In kW
-    let derate = parseFloat(inputInfo['derating_factor'])
-    let daySum = 0;
+    let derate = parseFloat(inputInfo['derating_factor']) // A float
+    let usableSquareFootage = ((parseInt(inputInfo['home_square_footage']) / parseInt(inputInfo['stories'])) + parseInt(inputInfo['additional_square_footage']))
+    let usableSquareMeters = usableSquareFootage / 10.764 // In meters
+    let daySumNoArea = 0; // Starting values
+    let daySumArea = 0; // Starting values
+    let panel_y = parseInt(inputInfo['panel_length']) / 39.37; // in meters
+    let panel_x = parseInt(inputInfo['panel_width']) / 39.37; // in meters
+    let panel_area = panel_y * panel_x; // in square meters
     for (const [key, value] of Object.entries(forecastData)) {
       // console.log(`${key}: ${value}`);
       let ghiVal = value; // in Watts/m2
       let ghiValKw = (parseFloat(ghiVal.toFixed(2)) / 1000) // In kW/m2
       let val = (ratingKw * derate) * (ghiValKw / 1.00) // 1.00 is in kW/m2
-      daySum += val;
+      let valWithArea = val * usableSquareMeters;
+      daySumNoArea += val;
+      daySumArea += valWithArea;
     }
-    console.log(daySum + " kWh of energy on April 15th")
+    console.log((daySumNoArea * panel_area).toFixed(2), " kWh on April 15th with a single " + panel_area.toFixed(2) + " square meter panel")
+    console.log((daySumArea * panel_area).toFixed(2), " : kWh on April 15th with " + usableSquareMeters.toFixed(2) + " square meters of paneling, or about " + (usableSquareMeters / panel_area).toFixed(0) + " panels")
     
     // Need some integral calculation here
     // Basically - each value of GHI is good for the following 60 minutes
