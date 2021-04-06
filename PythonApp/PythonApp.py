@@ -37,24 +37,21 @@ def getLocation():
 
 @app.route('/getNSRDBData')
 def getNSRDBData():
+    lat, lon =  35.7625474, -78.8912379
+    
     years = ['2016','2017','2018','2019']
     df = []
 
-    #lat, lon =  location.latitude, location.longitude
-    #lat, lon =  getLocation()
-    lat, lon =  35.7625474, -78.8912379
-
-    print(lat)
-    print(lon)
+    lat, lon =  location.latitude, location.longitude
     api_key = '5qyFRrBVjEZIGuR0WEcihqCEcg4LV8DbErgE6rze'
     attributes = 'ghi'
     leap_year = 'false'
-    interval = '30'
+    interval = '60'
     utc = 'false'
-    your_name = 'Group_A'
+    your_name = 'Narsimha+N'
     reason_for_use = 'testing'
     your_affiliation = 'ECU'
-    your_email = 'natalea20@students.ecu.edu'
+    your_email = 'narayankhedkarn19@students.ecu.edu'
     mailing_list = 'false'
 
     for year in years:
@@ -63,51 +60,51 @@ def getNSRDBData():
 
     # Concatenate Multiple year data into one DataFrame
     big_frame = pd.concat(df, ignore_index=True)
+        
+    #big_frame = big_frame.set_index(pd.date_range('1/1/{yr}'.format(yr=2017), freq=interval+'Min', periods=52560 ))
+    big_frame = big_frame.set_index(pd.date_range('1/1/{yr}'.format(yr=2016), freq=interval+'Min', periods=35040))
 
     # Set the time index in the pandas dataframe:
-    #big_frame = big_frame.set_index(pd.date_range('1/1/{yr}'.format(yr=2017), freq=interval+'Min', periods=52560 ))
-    big_frame = big_frame.set_index(pd.date_range('1/1/{yr}'.format(yr=2016), freq=interval+'Min', periods=70080))
-
-    print(big_frame.shape)
-
-    # filtering data 
-    big_frame=big_frame[(big_frame["GHI"]!=0)]
     big_frame.reset_index(inplace=True)
 
     #New DF with just Index & GHI
-    prophet_frame = big_frame[['index','GHI']]
+    prophet_frame = big_frame[['index','GHI']]    
     prophet_frame.head()
 
     #Renaming columns to ds & y
-    prophet_frame = prophet_frame.rename(columns = {'index':'ds','GHI':'y'})
-    prophet_frame['ds']=pd.to_datetime(prophet_frame.ds)
-    prophet_frame = prophet_frame.set_index(['ds'])
-
-    #Group by to get Monthly Values
-    prophet_frame_new = prophet_frame.groupby(prophet_frame.index.date).sum()
-    prophet_frame_new.reset_index(inplace=True)
-    prophet_frame_new = prophet_frame_new.rename(columns = {'index':'ds'})
+    prophet_frame_new = prophet_frame.rename(columns = {'index':'ds','GHI':'y'})
     prophet_frame_new['ds']=pd.to_datetime(prophet_frame_new.ds)
 
-    #Drop rows with null values
-    prophet_frame_new.dropna() 
+    #Limit GHI values between 8 am to 8 pm to better forecast in this time period
+    prophet_frame_new = prophet_frame_new[prophet_frame_new['ds'].dt.hour >=8 ]
+    prophet_frame_new = prophet_frame_new[prophet_frame_new['ds'].dt.hour <= 20]
 
-    # Pick model 3
-    m3 = Prophet(interval_width=0.85,changepoint_prior_scale=5,daily_seasonality=True,yearly_seasonality=20)
-    #For Graphs use below
-    #m3 = Prophet(interval_width=0.85,daily_seasonality=True,yearly_seasonality=20)
-    m3.add_seasonality(name='daily', period=365.25, fourier_order=5, prior_scale=0.02)
-    m3.fit(prophet_frame_new)
+    #prophet_frame_new.plot(x='ds',y='y',figsize=(12,8),legend=True,label='GHI Values',xlim=('2016-01-01','2020-01-01'))
+    
+    #Initialize Prophet
+    m = Prophet(interval_width=0.85,changepoint_prior_scale =0.2)
+    m.add_seasonality(name='daily', period=365.25, fourier_order=5, prior_scale=5)
+    m.fit(prophet_frame_new)
 
-    # Select the Period for future prediction
-    future3 = m3.make_future_dataframe(periods=730)
-    forecast3 = m3.predict(future3)
+    #create Future Time Periods
+    future = m.make_future_dataframe(periods=8812, freq='H')
+    future2 = future.copy()
+    future2['ds']=pd.to_datetime(future2.ds)
+    
+    #Discard forecasted timeperiod between 8 am to 8 pm to better forecast in this time period
+    future2 = future2[future2['ds'].dt.hour >=8 ]
+    future2 = future2[future2['ds'].dt.hour <= 20]
 
-    #Get Yearly Values
-    dfprint3 = forecast3[["ds", "trend","yhat_lower", "yhat_upper", "yhat"]]    
-    pd.set_option('display.float_format', '{:.2f}'.format)
-    dfprint3 = forecast3[["ds",  "yhat"]]
-    dfprint3.groupby([dfprint3['ds'].dt.year.rename('year')]).agg({'sum'})
+    #Discard rows with negative forecasting
+    fcst = m.predict(future2)
+    fcst["yhat"] = np.where(fcst["yhat"]<0,0,fcst["yhat"])
+    fcst["yhat_lower"] = np.where(fcst["yhat_lower"]<0,0,fcst["yhat_lower"])
+    
+    #fig = m.plot(fcst)
+    #fig1 = m.plot_components(fcst)
+
+    #Return Final_Forecast which is to be used in the final calculations
+    Final_Forecast = fcst[['ds','yhat']]
 
 
     return 'Working'
