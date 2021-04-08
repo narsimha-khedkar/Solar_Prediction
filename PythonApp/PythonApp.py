@@ -27,7 +27,7 @@ def greetings():
 @app.route('/getLocation')
 def getLocation():
     #place = input ("Enter Address :")
-    place = "408 Brook Pine Trl, Apex,nc"
+    place = "408 Brook Pine Trl, apex,nc,27523"
     geolocator = Nominatim(user_agent="SolarTest")
     location = geolocator.geocode(place)    
     #print(location.longitude)
@@ -37,12 +37,15 @@ def getLocation():
 
 @app.route('/getNSRDBData')
 def getNSRDBData():
-    lat, lon =  35.7625474, -78.8912379
+    
     
     years = ['2016','2017','2018','2019']
     df = []
-
-    lat, lon =  location.latitude, location.longitude
+    location =  getLocation()   
+    #lat = location.latitude
+    #lon =  location.latitude
+    lat, lon =  location['latitude'],location['longitude'] 
+    #lat, lon =  location.latitude, location.longitude
     api_key = '5qyFRrBVjEZIGuR0WEcihqCEcg4LV8DbErgE6rze'
     attributes = 'ghi'
     leap_year = 'false'
@@ -105,9 +108,12 @@ def getNSRDBData():
 
     #Return Final_Forecast which is to be used in the final calculations
     Final_Forecast = fcst[['ds','yhat']]
+    Final_Forecast['ds']=pd.to_datetime(Final_Forecast.ds)
+    #json = Final_Forecast.to_json()
 
+    json=Final_Forecast.to_json(date_format='iso', date_unit='s')
 
-    return 'Working'
+    return json
 
 
 if __name__ == '__main__':
