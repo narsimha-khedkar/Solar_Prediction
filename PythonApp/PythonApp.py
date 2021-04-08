@@ -105,6 +105,9 @@ def getNSRDBData():
     
     #fig = m.plot(fcst)
     #fig1 = m.plot_components(fcst)
+    #Filter only the Forecasted Time period
+    after_start_date = fcst["ds"] >= '2020-01-01'
+    fcst = fcst.loc[after_start_date]
 
     #Return Final_Forecast which is to be used in the final calculations
     Final_Forecast = fcst[['ds','yhat']]
