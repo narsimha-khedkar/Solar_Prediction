@@ -425,14 +425,37 @@
                       </div>
                       <div id = "panel_y">
                         <label for="panel_length_inches">Panel Length (Inches)</label>
-                        <input name="panel_length_inches" type="range" step="1" min="0" max="100" value="65" id="panel_length" onchange="document.getElementById('panel_y_show').innerHTML = document.getElementById('panel_length').value">
+                        <input name="panel_length_inches" type="range" step="1" min="39" max="100" value="65" id="panel_length" onchange="document.getElementById('panel_y_show').innerHTML = document.getElementById('panel_length').value">
                         <span id = "panel_y_show">65</span> inches
                       </div>
                       <div id = "panel_x">
                         <label for="panel_width_inches">Panel Width (Inches)</label>
-                        <input name="panel_width_inches" type="range" step="1" min="0" max="100" value="39" id="panel_width" onchange="document.getElementById('panel_x_show').innerHTML = document.getElementById('panel_width').value">
+                        <input name="panel_width_inches" type="range" step="1" min="39" max="100" value="39" id="panel_width" onchange="document.getElementById('panel_x_show').innerHTML = document.getElementById('panel_width').value">
                         <span id = "panel_x_show">39</span> inches
                       </div>
+                      <div id = "panel_number">
+                        <label for="panel_num">Number of Panels</label>
+                        <input name="panel_num" type="number" min="1" max="100" value="1" id="number_of_panels" style="margin-left: 10px">
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div class="card-header card-header-warning">
+                    <h4 class="card-title">Profitability</h4>
+                </div>
+                <div class="card-body table-responsive">
+                    <div id = "profitability_outputs">
+                        <div>
+                            You'll save $<span id = "savings"></span> throughout the course of the forecasting data.
+                        </div>
+                        <div>
+                            Your panels will generate an output of <span id = "output"></span>kWh
+                        </div>
                     </div>
                 </div>
             </div>
@@ -440,3 +463,9 @@
       </div>
   </div>
 </div>
+<style>
+    #home_inputs > div > input {
+        margin-left: 30px;
+        margin-bottom: 10px;
+    }
+</style>

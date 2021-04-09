@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import * as Chartist from "chartist";
+// import * as Chartist from "chartist";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 
 @Component({
@@ -9,7 +9,7 @@ import { GoogleAnalyticsService } from "ngx-google-analytics";
 })
 export class DashboardComponent implements OnInit {
   constructor(private _gaService: GoogleAnalyticsService) {
-    this._gaService.pageView("/dashboard", "Solar Predict Dashboard");
+    this._gaService.pageView("/dashboard", "Solar Prediction Dashboard");
   }
   getInputs(whichInputs?: Array<string>): object {
     const response = {}
@@ -53,36 +53,61 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  populateFinances(totalOutput: number, forecastOutput: object) {
+    const costPerKWH = 0.11
+    const saved = (costPerKWH * totalOutput).toFixed(2)
+    document.getElementById("savings").innerHTML = saved;
+    document.getElementById("output").innerHTML = totalOutput.toFixed(2);
+
+  }
+
+  setCharts(data: object) {
+    return
+  }
+
   doMath(): void {
+    // Get the user's address and panel information
     const inputInfo = this.getInputs();
+    // Pass the input info to the API which will send back forecasting data
     const forecastData = this.getForecastingData(inputInfo);
+
+    // Grab and convert the panel data
     let rating = parseInt(inputInfo['wattage']) // in Watts
     let ratingKw = (parseFloat(rating.toFixed(2)) / 1000) // In kW
     let derate = parseFloat(inputInfo['derating_factor']) // A float
-    let usableSquareFootage = ((parseInt(inputInfo['home_square_footage']) / parseInt(inputInfo['stories'])) + parseInt(inputInfo['additional_square_footage']))
-    let usableSquareMeters = usableSquareFootage / 10.764 // In meters
-    let daySumNoArea = 0; // Starting values
-    let daySumArea = 0; // Starting values
     let panel_y = parseInt(inputInfo['panel_length']) / 39.37; // in meters
     let panel_x = parseInt(inputInfo['panel_width']) / 39.37; // in meters
     let panel_area = panel_y * panel_x; // in square meters
+
+    // Grab the square footage to be used for paneling
+    let usableSquareFootage = ((parseInt(inputInfo['home_square_footage']) / parseInt(inputInfo['stories'])) + parseInt(inputInfo['additional_square_footage']))
+    let usableSquareMeters = usableSquareFootage / 10.764 // In meters
+    
+    // Set starting values
+    let totalOutput = 0;
+
+    // Get ready to build the forecast output object
+    let forecastOutput = forecastData;
+
     for (const [key, value] of Object.entries(forecastData)) {
-      // console.log(`${key}: ${value}`);
-      let ghiVal = value; // in Watts/m2
-      let ghiValKw = (parseFloat(ghiVal.toFixed(2)) / 1000) // In kW/m2
-      let val = (ratingKw * derate) * (ghiValKw / 1.00) // 1.00 is in kW/m2
-      let valWithArea = val * usableSquareMeters;
-      daySumNoArea += val;
-      daySumArea += valWithArea;
+      let ghiValKw = (parseFloat(value.toFixed(2)) / 1000)
+      let output = (ratingKw * derate) * (ghiValKw / 1.00)
+      forecastOutput[key] = output
+      totalOutput += output
     }
-    console.log((daySumNoArea * panel_area).toFixed(2), " kWh on April 15th with a single " + panel_area.toFixed(2) + " square meter panel")
-    console.log((daySumArea * panel_area).toFixed(2), " : kWh on April 15th with " + usableSquareMeters.toFixed(2) + " square meters of paneling, or about " + (usableSquareMeters / panel_area).toFixed(0) + " panels")
+
+    totalOutput *= inputInfo.number_of_panels
+    this.populateFinances(totalOutput, forecastOutput)
+
     
     // Need some integral calculation here
     // Basically - each value of GHI is good for the following 60 minutes
     // And generates that 30 minutes of power in kWh
-
+    this.setCharts(forecastData);
   }
+
+
+
   // startAnimationForLineChart(chart) {
   //   let seq: any, delays: any, durations: any;
   //   seq = 0;
