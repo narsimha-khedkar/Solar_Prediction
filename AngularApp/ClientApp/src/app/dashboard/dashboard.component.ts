@@ -96,7 +96,7 @@ export class DashboardComponent implements OnInit {
       totalOutput += output
     }
 
-    totalOutput *= inputInfo.number_of_panels
+    // totalOutput *= inputInfo.number_of_panels
     this.populateFinances(totalOutput, forecastOutput)
 
     
