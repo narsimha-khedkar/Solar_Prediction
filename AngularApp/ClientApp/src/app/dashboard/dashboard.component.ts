@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { MatStepper } from "@angular/material/stepper";
-
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { Subject } from "rxjs";
 
@@ -142,7 +141,9 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  populateFinances(totalOutput: number, forecastOutput: object) {
+  populateFinances(state, totalOutput: number, forecastOutput: object) {
+    const averages = require('electricity_data')
+
     const costPerKWH = 0.11;
     const saved = (costPerKWH * totalOutput).toFixed(2);
     document.getElementById("savings").innerHTML = saved;
@@ -155,23 +156,24 @@ export class DashboardComponent implements OnInit {
 
   doMath(): void {
     // Get the user's address and panel information
-    const inputInfo = this.getInputs();
+    // const inputInfo = this.getInputs();
+    const inputInfo = this.getInputsTheNgWay()
     // Pass the input info to the API which will send back forecasting data
     const forecastData = this.getForecastingData(inputInfo);
 
     // Grab and convert the panel data
-    let rating = parseInt(inputInfo["wattage"]); // in Watts
+    let rating = inputInfo.wattage; // in Watts
     let ratingKw = parseFloat(rating.toFixed(2)) / 1000; // In kW
-    let derate = parseFloat(inputInfo["derating_factor"]); // A float
-    let panel_y = parseInt(inputInfo["panel_length"]) / 39.37; // in meters
-    let panel_x = parseInt(inputInfo["panel_width"]) / 39.37; // in meters
+    let derate = inputInfo.deratingFactor; // A float
+    let panel_y = inputInfo.panelLength / 39.37; // in meters
+    let panel_x = inputInfo.panelWidth / 39.37; // in meters
     let panel_area = panel_y * panel_x; // in square meters
 
     // Grab the square footage to be used for paneling
     let usableSquareFootage =
-      parseInt(inputInfo["home_square_footage"]) /
-        parseInt(inputInfo["stories"]) +
-      parseInt(inputInfo["additional_square_footage"]);
+      inputInfo.homeSquareFootage /
+        inputInfo.homeStories +
+      inputInfo.additionalFootage;
     let usableSquareMeters = usableSquareFootage / 10.764; // In meters
 
     // Set starting values
@@ -187,8 +189,8 @@ export class DashboardComponent implements OnInit {
       totalOutput += output;
     }
 
-    // totalOutput *= inputInfo.number_of_panels
-    this.populateFinances(totalOutput, forecastOutput);
+    totalOutput *= inputInfo.numberOfPanels
+    this.populateFinances(inputInfo.state, totalOutput, forecastOutput);
 
     // Need some integral calculation here
     // Basically - each value of GHI is good for the following 60 minutes

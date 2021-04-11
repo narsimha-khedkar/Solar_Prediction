@@ -210,23 +210,6 @@
                     </div>
                   </div>
                 </div>
-                <div class="card">
-                  <div class="card-header card-header-warning">
-                    <h4 class="card-title">Profitability</h4>
-                  </div>
-                  <div class="card-body table-responsive">
-                    <div id="profitability_outputs">
-                      <div>
-                        You'll save $<span id="savings"></span> throughout the
-                        course of the forecasting data.
-                      </div>
-                      <div>
-                        Your panels will generate an output of
-                        <span id="output"></span>kWh
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
               <div>
                 <button
@@ -270,6 +253,29 @@
                 </div>
               </div>
             </div>
+            
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header card-header-warning">
+                    <h4 class="card-title">Profitability</h4>
+                  </div>
+                  <div class="card-body table-responsive">
+                    <div id="profitability_outputs">
+                      <div>
+                        You'll save $<span id="savings">[[ costSavings ]]</span> throughout the
+                        course of the forecasting data.
+                      </div>
+                      <div>
+                        Your panels will generate an output of
+                        <span id="output">[[ kwhOutput ]]</span>kWh
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </mat-step>
         </mat-horizontal-stepper>
       </div>
