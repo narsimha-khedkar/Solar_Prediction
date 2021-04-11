@@ -144,6 +144,12 @@ export class DashboardComponent implements OnInit {
     return response;
   }
 
+  testCall() {
+    this._httpClient.get('http://localhost:5000/greetings').subscribe(res =>{ 
+      console.log(res)
+    })
+  }
+
   getInputsTheNgWay() {
     const response = {
       houseNumber: this.houseNumber.toUpperCase(),
