@@ -1,471 +1,284 @@
 <div class="main-content">
   <div class="container-fluid">
-      <!-- <div class="row">
-          <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                  <div class="card-header card-header-warning card-header-icon">
-                      <div class="card-icon">
-                          <i class="material-icons">content_copy</i>
-                      </div>
-                      <p class="card-category">Used Space</p>
-                      <h3 class="card-title">49/50
-                          <small>GB</small>
-                      </h3>
-                  </div>
-                  <div class="card-footer">
-                      <div class="stats">
-                          <i class="material-icons text-danger">warning</i>
-                          <a href="javascript:void(0)">Get More Space...</a>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                  <div class="card-header card-header-success card-header-icon">
-                      <div class="card-icon">
-                          <i class="material-icons">store</i>
-                      </div>
-                      <p class="card-category">Revenue</p>
-                      <h3 class="card-title">$34,245</h3>
-                  </div>
-                  <div class="card-footer">
-                      <div class="stats">
-                          <i class="material-icons">date_range</i> Last 24 Hours
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                  <div class="card-header card-header-danger card-header-icon">
-                      <div class="card-icon">
-                          <i class="material-icons">info_outline</i>
-                      </div>
-                      <p class="card-category">Fixed Issues</p>
-                      <h3 class="card-title">75</h3>
-                  </div>
-                  <div class="card-footer">
-                      <div class="stats">
-                          <i class="material-icons">local_offer</i> Tracked from Github
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                  <div class="card-header card-header-info card-header-icon">
-                      <div class="card-icon">
-                          <i class="fa fa-twitter"></i>
-                      </div>
-                      <p class="card-category">Followers</p>
-                      <h3 class="card-title">+245</h3>
-                  </div>
-                  <div class="card-footer">
-                      <div class="stats">
-                          <i class="material-icons">update</i> Just Updated
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div> -->
-      <!-- <div class="row">
-          <div class="col-md-4">
-              <div class="card card-chart">
-                  <div class="card-header card-header-success">
-                      <div class="ct-chart" id="dailySalesChart"></div>
-                  </div>
-                  <div class="card-body">
-                      <h4 class="card-title">Daily Sales</h4>
-                      <p class="card-category">
-                          <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
-                  </div>
-                  <div class="card-footer">
-                      <div class="stats">
-                          <i class="material-icons">access_time</i> updated 4 minutes ago
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-4">
-              <div class="card card-chart">
+    <div class="row">
+      <div class="col-md-12">
+        <mat-horizontal-stepper [linear]="true" #stepper>
+          <mat-step>
+            <ng-template matStepLabel>Enter Home Details</ng-template>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="card">
                   <div class="card-header card-header-warning">
-                      <div class="ct-chart" id="websiteViewsChart"></div>
-                  </div>
-                  <div class="card-body">
-                      <h4 class="card-title">Email Subscriptions</h4>
-                      <p class="card-category">Last Campaign Performance</p>
-                  </div>
-                  <div class="card-footer">
-                      <div class="stats">
-                          <i class="material-icons">access_time</i> campaign sent 2 days ago
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-4">
-              <div class="card card-chart">
-                  <div class="card-header card-header-danger">
-                      <div class="ct-chart" id="completedTasksChart"></div>
-                  </div>
-                  <div class="card-body">
-                      <h4 class="card-title">Completed Tasks</h4>
-                      <p class="card-category">Last Campaign Performance</p>
-                  </div>
-                  <div class="card-footer">
-                      <div class="stats">
-                          <i class="material-icons">access_time</i> campaign sent 2 days ago
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div> -->
-      <div class="row">
-          <!-- <div class="col-lg-6 col-md-12">
-              <div class="card">
-                  <div class="card-header card-header-tabs card-header-primary">
-                      <div class="nav-tabs-navigation">
-                          <div class="nav-tabs-wrapper">
-                              <span class="nav-tabs-title">Tasks:</span>
-                              <ul class="nav nav-tabs" data-tabs="tabs">
-                                  <li class="nav-item">
-                                      <a mat-button class="nav-link active" href="#profile" data-toggle="tab">
-                                          <i class="material-icons">bug_report</i> Bugs
-                                          <div class="ripple-container"></div>
-                                      </a>
-                                  </li>
-                                  <li class="nav-item">
-                                      <a mat-button class="nav-link" href="#messages" data-toggle="tab">
-                                          <i class="material-icons">code</i> Website
-                                          <div class="ripple-container"></div>
-                                      </a>
-                                  </li>
-                                  <li class="nav-item">
-                                      <a mat-button class="nav-link" href="#settings" data-toggle="tab">
-                                          <i class="material-icons">cloud</i> Server
-                                          <div class="ripple-container"></div>
-                                      </a>
-                                  </li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="card-body">
-                      <div class="tab-content">
-                          <div class="tab-pane active" id="profile">
-                              <table class="table">
-                                  <tbody>
-                                      <tr>
-                                          <td>
-                                              <div class="form-check">
-                                                  <label class="form-check-label">
-                                                      <input class="form-check-input" type="checkbox" value="" checked>
-                                                      <span class="form-check-sign">
-                                                          <span class="check"></span>
-                                                      </span>
-                                                  </label>
-                                              </div>
-                                          </td>
-                                          <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                          <td class="td-actions text-right">
-                                              <button mat-raised-button type="button" matTooltip="Edit Task" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">edit</i>
-                                              </button>
-                                              <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">close</i>
-                                              </button>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <div class="form-check">
-                                                  <label class="form-check-label">
-                                                      <input class="form-check-input" type="checkbox" value="">
-                                                      <span class="form-check-sign">
-                                                          <span class="check"></span>
-                                                      </span>
-                                                  </label>
-                                              </div>
-                                          </td>
-                                          <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                          <td class="td-actions text-right">
-                                              <button mat-raised-button type="button" matTooltip="Edit Task" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">edit</i>
-                                              </button>
-                                              <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">close</i>
-                                              </button>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <div class="form-check">
-                                                  <label class="form-check-label">
-                                                      <input class="form-check-input" type="checkbox" value="">
-                                                      <span class="form-check-sign">
-                                                          <span class="check"></span>
-                                                      </span>
-                                                  </label>
-                                              </div>
-                                          </td>
-                                          <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                          </td>
-                                          <td class="td-actions text-right">
-                                              <button mat-raised-button type="button" matTooltip="Edit Task" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">edit</i>
-                                              </button>
-                                              <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">close</i>
-                                              </button>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <div class="form-check">
-                                                  <label class="form-check-label">
-                                                      <input class="form-check-input" type="checkbox" value="" checked>
-                                                      <span class="form-check-sign">
-                                                          <span class="check"></span>
-                                                      </span>
-                                                  </label>
-                                              </div>
-                                          </td>
-                                          <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                                          <td class="td-actions text-right">
-                                              <button mat-raised-button type="button" matTooltip="Edit Task" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">edit</i>
-                                              </button>
-                                              <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">close</i>
-                                              </button>
-                                          </td>
-                                      </tr>
-                                  </tbody>
-                              </table>
-                          </div>
-                          <div class="tab-pane" id="messages">
-                              <table class="table">
-                                  <tbody>
-                                      <tr>
-                                          <td>
-                                              <div class="form-check">
-                                                  <label class="form-check-label">
-                                                      <input class="form-check-input" type="checkbox" value="" checked>
-                                                      <span class="form-check-sign">
-                                                          <span class="check"></span>
-                                                      </span>
-                                                  </label>
-                                              </div>
-                                          </td>
-                                          <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                          </td>
-                                          <td class="td-actions text-right">
-                                              <button mat-raised-button type="button" matTooltip="Edit Task" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">edit</i>
-                                              </button>
-                                              <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">close</i>
-                                              </button>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <div class="form-check">
-                                                  <label class="form-check-label">
-                                                      <input class="form-check-input" type="checkbox" value="">
-                                                      <span class="form-check-sign">
-                                                          <span class="check"></span>
-                                                      </span>
-                                                  </label>
-                                              </div>
-                                          </td>
-                                          <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                          <td class="td-actions text-right">
-                                              <button mat-raised-button type="button" matTooltip="Edit Task" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">edit</i>
-                                              </button>
-                                              <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">close</i>
-                                              </button>
-                                          </td>
-                                      </tr>
-                                  </tbody>
-                              </table>
-                          </div>
-                          <div class="tab-pane" id="settings">
-                              <table class="table">
-                                  <tbody>
-                                      <tr>
-                                          <td>
-                                              <div class="form-check">
-                                                  <label class="form-check-label">
-                                                      <input class="form-check-input" type="checkbox" value="">
-                                                      <span class="form-check-sign">
-                                                          <span class="check"></span>
-                                                      </span>
-                                                  </label>
-                                              </div>
-                                          </td>
-                                          <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                          <td class="td-actions text-right">
-                                              <button mat-raised-button type="button" matTooltip="Edit Task" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">edit</i>
-                                              </button>
-                                              <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">close</i>
-                                              </button>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <div class="form-check">
-                                                  <label class="form-check-label">
-                                                      <input class="form-check-input" type="checkbox" value="" checked>
-                                                      <span class="form-check-sign">
-                                                          <span class="check"></span>
-                                                      </span>
-                                                  </label>
-                                              </div>
-                                          </td>
-                                          <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                          </td>
-                                          <td class="td-actions text-right">
-                                              <button mat-raised-button type="button" matTooltip="Edit Task" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">edit</i>
-                                              </button>
-                                              <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">close</i>
-                                              </button>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <div class="form-check">
-                                                  <label class="form-check-label">
-                                                      <input class="form-check-input" type="checkbox" value="" checked>
-                                                      <span class="form-check-sign">
-                                                          <span class="check"></span>
-                                                      </span>
-                                                  </label>
-                                              </div>
-                                          </td>
-                                          <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                          <td class="td-actions text-right">
-                                              <button mat-raised-button type="button" matTooltip="Edit Task" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">edit</i>
-                                              </button>
-                                              <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">close</i>
-                                              </button>
-                                          </td>
-                                      </tr>
-                                  </tbody>
-                              </table>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div> -->
-          <div class="col-lg-9 col-md-12">
-              <div class="card">
-                  <div class="card-header card-header-warning">
-                      <h4 class="card-title">Home Information</h4>
+                    <h4 class="card-title">Home Information</h4>
                   </div>
                   <div class="card-body table-responsive">
-                    <div id = "home_inputs">
-                        <div id = "address_container">
-                            <label for="housenumber">House Number</label>
-                            <input name = "housenumber" type="text" id="housenumber"><br>
-                            <label for="street_name">Street Name</label>
-                            <input name = "street_name" type="text" id="street_name"><br>
-                            <label for="street_type">Street Type</label>
-                            <input name = "street_type" type="text" id="street_type"><br>
-                            <label for="city">City</label>
-                            <input name = "city" type="text" id="city"><br>
-                            <label for="state">State</label>
-                            <input name = "state" type="text" id="state"><br>
-                            <label for="zip">Zip</label>
-                            <input name = "zip" type="text" id="zip"><br>
-                        </div>
-                        <div id = "home_square_footage">
-                            <label for="home_footage">Home Square Footage</label>
-                            <input name="home_footage" type="number" min="0" max="10000" value="2000" id="home_square_footage">
-                        </div>
-                        <div id = "additional_footage">
-                            <label for="additional">Additional Square Footage</label>
-                            <input name="additional" type="number" min="0" max="10000" value="500" id="additional_square_footage">
-                        </div>
-                        <div id = "home_stories">
-                            <label for="stories">Home Stories</label>
-                            <input name="stories" type="number" min="1" max="5" value="1" id="stories">
-                        </div>
-                        <div id = "submit_btn">
-                            <button (click) = "doMath()" id = "do_calculation">Perform Profitability Estimation</button>
-                        </div>
+                    <div id="home_inputs" class="col-md-11">
+                      <div id="address_container">
+                        <label class="form-label" for="housenumber"
+                          >House Number</label
+                        >
+                        <input
+                          class="form-control"
+                          name="housenumber"
+                          type="text"
+                          id="housenumber"
+                          [(ngModel)]="houseNumber"
+                        />
+
+                        <label class="form-label" for="street_name"
+                          >Street Name</label
+                        >
+                        <input
+                          class="form-control"
+                          name="street_name"
+                          type="text"
+                          id="street_name"
+                          [(ngModel)]="streetName"
+                        />
+                        <label class="form-label" for="street_type"
+                          >Street Type</label
+                        >
+                        <input
+                          class="form-control"
+                          name="street_type"
+                          type="text"
+                          id="street_type"
+                          [(ngModel)]="streetType"
+                        />
+                        <label class="form-label" for="city">City</label>
+                        <input
+                          class="form-control"
+                          name="city"
+                          type="text"
+                          id="city"
+                          [(ngModel)]="city"
+                        />
+                        <label class="form-label" for="state">State</label>
+                        <input
+                          class="form-control"
+                          name="state"
+                          type="text"
+                          id="state"
+                          [(ngModel)]="state"
+                        />
+                        <label for="zip" class="form-label">Zip</label>
+                        <input
+                          class="form-control"
+                          name="zip"
+                          type="text"
+                          id="zip"
+                          [(ngModel)]="zip"
+                        />
                       </div>
+                      <div id="home_square_footage">
+                        <label class="form-label" for="home_footage"
+                          >Home Square Footage</label
+                        >
+                        <input
+                          class="form-control"
+                          name="home_footage"
+                          type="number"
+                          min="0"
+                          max="10000"
+                          value="2000"
+                          id="home_square_footage"
+                          [(ngModel)]="homeSquareFootage"
+                        />
+                      </div>
+                      <div id="additional_footage">
+                        <label class="form-label" for="additional"
+                          >Additional Square Footage</label
+                        >
+                        <input
+                          class="form-control"
+                          name="additional"
+                          type="number"
+                          min="0"
+                          max="10000"
+                          value="500"
+                          id="additional_square_footage"
+                          [(ngModel)]="additionalFootage"
+                        />
+                      </div>
+                      <div id="home_stories">
+                        <label class="form-label" for="stories"
+                          >Home Stories</label
+                        >
+                        <input
+                          class="form-control"
+                          name="stories"
+                          type="number"
+                          min="1"
+                          max="5"
+                          value="1"
+                          id="stories"
+                          [(ngModel)]="homeStories"
+                        />
+                      </div>
+                    </div>
                   </div>
+                </div>
               </div>
-          </div>
-          <div class="col-lg-3 col-md-12">
-            <div class="card">
-                <div class="card-header card-header-warning">
+              <div class="col-md-4">
+                <div class="card">
+                  <div class="card-header card-header-warning">
                     <h4 class="card-title">About Your Panels</h4>
-                </div>
-                <div class="card-body table-responsive">
-                  <div id = "panel_inputs">
-                      <div id = "wattage_rating">
-                          <label for="wattage">Wattage Rating</label>
-                          <input name="wattage" type="range" min="150" max="400" value="275" id="wattage" onchange="document.getElementById('wattage_show').innerHTML = document.getElementById('wattage').value">
-                          <span id = "wattage_show">275</span> Watts
-                        </div>
-                      <div id = "derating">
+                  </div>
+                  <div class="card-body table-responsive">
+                    <div id="panel_inputs">
+                      <div id="wattage_rating">
+                        <label for="wattage">Wattage Rating</label>
+                        <input
+                          class="form-control"
+                          name="wattage"
+                          type="range"
+                          min="150"
+                          max="400"
+                          value="275"
+                          id="wattage"
+                          [(ngModel)]="wattage"
+                          onchange="document.getElementById('wattage_show').innerHTML = document.getElementById('wattage').value"
+                        />
+                        <span id="wattage_show">275</span> Watts
+                      </div>
+                      <div id="derating">
                         <label for="derate">Derating Factor</label>
-                        <input name="derate" type="range" step="0.05" min="0.0" max="1.0" value="0.85" id="derating_factor" onchange="document.getElementById('derate_show').innerHTML = document.getElementById('derating_factor').value">
-                        <span id = "derate_show">0.8</span>
+                        <input
+                          class="form-control"
+                          name="derate"
+                          type="range"
+                          step="0.05"
+                          min="0.0"
+                          max="1.0"
+                          value="0.85"
+                          id="derating_factor"
+                          [(ngModel)]="deratingFactor"
+                          onchange="document.getElementById('derate_show').innerHTML = document.getElementById('derating_factor').value"
+                        />
+                        <span id="derate_show">0.8</span>
                       </div>
-                      <div id = "panel_y">
-                        <label for="panel_length_inches">Panel Length (Inches)</label>
-                        <input name="panel_length_inches" type="range" step="1" min="39" max="100" value="65" id="panel_length" onchange="document.getElementById('panel_y_show').innerHTML = document.getElementById('panel_length').value">
-                        <span id = "panel_y_show">65</span> inches
+                      <div id="panel_y">
+                        <label for="panel_length_inches"
+                          >Panel Length (Inches)</label
+                        >
+                        <input
+                          class="form-control"
+                          name="panel_length_inches"
+                          type="range"
+                          step="1"
+                          min="39"
+                          max="100"
+                          value="65"
+                          id="panel_length"
+                          [(ngModel)]="panelLength"
+                          onchange="document.getElementById('panel_y_show').innerHTML = document.getElementById('panel_length').value"
+                        />
+                        <span id="panel_y_show">65</span> inches
                       </div>
-                      <div id = "panel_x">
-                        <label for="panel_width_inches">Panel Width (Inches)</label>
-                        <input name="panel_width_inches" type="range" step="1" min="39" max="100" value="39" id="panel_width" onchange="document.getElementById('panel_x_show').innerHTML = document.getElementById('panel_width').value">
-                        <span id = "panel_x_show">39</span> inches
+                      <div id="panel_x">
+                        <label for="panel_width_inches"
+                          >Panel Width (Inches)</label
+                        >
+                        <input
+                          class="form-control"
+                          name="panel_width_inches"
+                          type="range"
+                          step="1"
+                          min="39"
+                          max="100"
+                          value="39"
+                          id="panel_width"
+                          [(ngModel)]="panelWidth"
+                          onchange="document.getElementById('panel_x_show').innerHTML = document.getElementById('panel_width').value"
+                        />
+                        <span id="panel_x_show">39</span> inches
                       </div>
-                      <div id = "panel_number">
+                      <div id="panel_number">
                         <label for="panel_num">Number of Panels</label>
-                        <input name="panel_num" type="number" min="1" max="100" value="1" id="number_of_panels" style="margin-left: 10px">
+                        <input
+                          class="form-control"
+                          name="panel_num"
+                          type="number"
+                          min="1"
+                          max="100"
+                          value="1"
+                          id="number_of_panels"
+                          style="margin-left: 10px"
+                          [(ngModel)]="numberOfPanels"
+                        />
                       </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 col-md-12">
-            <div class="card">
-                <div class="card-header card-header-warning">
+                <div class="card">
+                  <div class="card-header card-header-warning">
                     <h4 class="card-title">Profitability</h4>
-                </div>
-                <div class="card-body table-responsive">
-                    <div id = "profitability_outputs">
-                        <div>
-                            You'll save $<span id = "savings"></span> throughout the course of the forecasting data.
-                        </div>
-                        <div>
-                            Your panels will generate an output of <span id = "output"></span>kWh
-                        </div>
+                  </div>
+                  <div class="card-body table-responsive">
+                    <div id="profitability_outputs">
+                      <div>
+                        You'll save $<span id="savings"></span> throughout the
+                        course of the forecasting data.
+                      </div>
+                      <div>
+                        Your panels will generate an output of
+                        <span id="output"></span>kWh
+                      </div>
                     </div>
+                  </div>
                 </div>
+              </div>
+              <div>
+                <button
+                  class="btn btn-primary"
+                  (click)="doMath()"
+                  id="do_calculation"
+                >
+                  Perform Profitability Estimation
+                </button>
+                <button class="btn btn-primary" (click)="getNsrbData(stepper)">
+                  Send It!
+                </button>
+              </div>
             </div>
-        </div>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Review Estimation</ng-template>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header card-header-warning">
+                    Break-Even Point Estimate
+                  </div>
+                  <div class="card-body mr-2" style="display: grid">
+                    <ngx-charts-line-chart
+                      [scheme]="colorScheme"
+                      [showXAxisLabel]="showXAxisLabel"
+                      [showYAxisLabel]="showYAxisLabel"
+                      [xAxis]="xAxis"
+                      [yAxis]="yAxis"
+                      [xAxisLabel]="xAxisLabel"
+                      [yAxisLabel]="yAxisLabel"
+                      [timeline]="timeline"
+                      [results]="chartData"
+                      (select)="onSelect($event)"
+                      (activate)="onActivate($event)"
+                      (deactivate)="onDeactivate($event)"
+                    >
+                    </ngx-charts-line-chart>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-step>
+        </mat-horizontal-stepper>
       </div>
+    </div>
   </div>
 </div>
 <style>
-    #home_inputs > div > input {
-        margin-left: 30px;
-        margin-bottom: 10px;
-    }
+  #home_inputs > div > input {
+    margin-left: 30px;
+    margin-bottom: 10px;
+  }
 </style>

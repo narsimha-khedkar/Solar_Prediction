@@ -73,6 +73,7 @@ namespace AngularApp
 
                 if (env.IsDevelopment())
                 {
+
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });

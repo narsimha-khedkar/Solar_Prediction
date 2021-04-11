@@ -1,5 +1,7 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-// import * as Chartist from "chartist";
+import { MatStepper } from "@angular/material/stepper";
+
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 
 @Component({
@@ -8,61 +10,199 @@ import { GoogleAnalyticsService } from "ngx-google-analytics";
   styleUrls: ["./dashboard.component.css"],
 })
 export class DashboardComponent implements OnInit {
-  constructor(private _gaService: GoogleAnalyticsService) {
+  constructor(
+    private _gaService: GoogleAnalyticsService,
+    private _httpClient: HttpClient
+  ) {
     this._gaService.pageView("/dashboard", "Solar Prediction Dashboard");
   }
+
+  ngOnInit() {}
+
+  // home inputs
+  houseNumber: string = "";
+  streetName: string = "";
+  streetType: string = "";
+  city: string = "";
+  state: string = "";
+  zip: string = "";
+  homeSquareFootage: number = 0;
+  additionalFootage: number = 0;
+  homeStories: number = 1;
+
+  // panel inputs
+  wattage: number = 275;
+  deratingFactor: number = 0.85;
+  panelLength: number = 65;
+  panelWidth: number = 39;
+  numberOfPanels: number = 1;
+
+  // chart data
+  multi: any[];
+  view: any[] = [700, 300];
+
+  // options
+  legend: boolean = true;
+  showLabels: boolean = true;
+  animations: boolean = true;
+  xAxis: boolean = true;
+  yAxis: boolean = true;
+  showYAxisLabel: boolean = true;
+  showXAxisLabel: boolean = true;
+  xAxisLabel: string = "Year";
+  yAxisLabel: string = "Population";
+  timeline: boolean = true;
+
+  colorScheme = {
+    domain: ["#5AA454", "#E44D25", "#CFC0BB", "#7aa3e5", "#a8385d", "#aae3f5"],
+  };
+
+  chartData = [
+    {
+      name: "Germany",
+      series: [
+        {
+          name: "1990",
+          value: 62000000,
+        },
+        {
+          name: "2010",
+          value: 73000000,
+        },
+        {
+          name: "2011",
+          value: 89400000,
+        },
+      ],
+    },
+
+    {
+      name: "USA",
+      series: [
+        {
+          name: "1990",
+          value: 250000000,
+        },
+        {
+          name: "2010",
+          value: 309000000,
+        },
+        {
+          name: "2011",
+          value: 311000000,
+        },
+      ],
+    },
+
+    {
+      name: "France",
+      series: [
+        {
+          name: "1990",
+          value: 58000000,
+        },
+        {
+          name: "2010",
+          value: 50000020,
+        },
+        {
+          name: "2011",
+          value: 58000000,
+        },
+      ],
+    },
+    {
+      name: "UK",
+      series: [
+        {
+          name: "1990",
+          value: 57000000,
+        },
+        {
+          name: "2010",
+          value: 62000000,
+        },
+      ],
+    },
+  ];
+
   getInputs(whichInputs?: Array<string>): object {
-    const response = {}
-    if (!whichInputs) whichInputs = ['home_inputs','panel_inputs'];
-    whichInputs.forEach(inputType => {
-      let inputContainer = document.querySelector('div[id="' + inputType + '"]');
-      let inputs = inputContainer.querySelectorAll('input');
-      inputs.forEach(input => {
-        Object.assign(response, {[input.id]: (input.value !== "") ? input.value : ""});
-      })
-    })
-    return response
+    const response = {};
+
+    if (!whichInputs) whichInputs = ["home_inputs", "panel_inputs"];
+    whichInputs.forEach((inputType) => {
+      let inputContainer = document.querySelector(
+        'div[id="' + inputType + '"]'
+      );
+      let inputs = inputContainer.querySelectorAll("input");
+      inputs.forEach((input) => {
+        Object.assign(response, {
+          [input.id]: input.value !== "" ? input.value : "",
+        });
+      });
+    });
+    return response;
+  }
+
+  getInputsTheNgWay() {
+    const response = {
+      houseNumber: this.houseNumber.toUpperCase(),
+      streetName: this.streetName.toUpperCase(),
+      streetType: this.streetType.toUpperCase(),
+      city: this.city.toUpperCase(),
+      state: this.state.toUpperCase(),
+      zip: this.zip,
+      additionalFootage: this.additionalFootage,
+      homeSquareFootage: this.homeSquareFootage,
+      homeStories: this.homeStories,
+      wattage: this.wattage,
+      deratingFactor: this.deratingFactor,
+      panelLength: this.panelLength,
+      panelWidth: this.panelWidth,
+      numberOfPanels: this.numberOfPanels,
+    };
+
+    return response;
   }
 
   getForecastingData(inputInfo: object): object {
-    return { 
-      '2021-04-15 0000Z' : 0,
-      '2021-04-15 0100Z' : 0,
-      '2021-04-15 0200Z' : 0,
-      '2021-04-15 0300Z' : 100,
-      '2021-04-15 0400Z' : 200,
-      '2021-04-15 0500Z' : 300,
-      '2021-04-15 0600Z' : 400,
-      '2021-04-15 0700Z' : 500,
-      '2021-04-15 0800Z' : 600,
-      '2021-04-15 0900Z' : 700,
-      '2021-04-15 1000Z' : 800,
-      '2021-04-15 1100Z' : 800,
-      '2021-04-15 1200Z' : 700,
-      '2021-04-15 1300Z' : 600,
-      '2021-04-15 1400Z' : 500,
-      '2021-04-15 1500Z' : 400,
-      '2021-04-15 1600Z' : 300,
-      '2021-04-15 1700Z' : 200,
-      '2021-04-15 1800Z' : 100,
-      '2021-04-15 1900Z' : 0,
-      '2021-04-15 2000Z' : 0,
-      '2021-04-15 2100Z' : 0,
-      '2021-04-15 2200Z' : 0,
-      '2021-04-15 2300Z' : 0,
-    }
+    return {
+      "2021-04-15 0000Z": 0,
+      "2021-04-15 0100Z": 0,
+      "2021-04-15 0200Z": 0,
+      "2021-04-15 0300Z": 100,
+      "2021-04-15 0400Z": 200,
+      "2021-04-15 0500Z": 300,
+      "2021-04-15 0600Z": 400,
+      "2021-04-15 0700Z": 500,
+      "2021-04-15 0800Z": 600,
+      "2021-04-15 0900Z": 700,
+      "2021-04-15 1000Z": 800,
+      "2021-04-15 1100Z": 800,
+      "2021-04-15 1200Z": 700,
+      "2021-04-15 1300Z": 600,
+      "2021-04-15 1400Z": 500,
+      "2021-04-15 1500Z": 400,
+      "2021-04-15 1600Z": 300,
+      "2021-04-15 1700Z": 200,
+      "2021-04-15 1800Z": 100,
+      "2021-04-15 1900Z": 0,
+      "2021-04-15 2000Z": 0,
+      "2021-04-15 2100Z": 0,
+      "2021-04-15 2200Z": 0,
+      "2021-04-15 2300Z": 0,
+    };
   }
 
   populateFinances(totalOutput: number, forecastOutput: object) {
-    const costPerKWH = 0.11
-    const saved = (costPerKWH * totalOutput).toFixed(2)
+    const costPerKWH = 0.11;
+    const saved = (costPerKWH * totalOutput).toFixed(2);
     document.getElementById("savings").innerHTML = saved;
     document.getElementById("output").innerHTML = totalOutput.toFixed(2);
-
   }
 
   setCharts(data: object) {
-    return
+    return;
   }
 
   doMath(): void {
@@ -72,17 +212,20 @@ export class DashboardComponent implements OnInit {
     const forecastData = this.getForecastingData(inputInfo);
 
     // Grab and convert the panel data
-    let rating = parseInt(inputInfo['wattage']) // in Watts
-    let ratingKw = (parseFloat(rating.toFixed(2)) / 1000) // In kW
-    let derate = parseFloat(inputInfo['derating_factor']) // A float
-    let panel_y = parseInt(inputInfo['panel_length']) / 39.37; // in meters
-    let panel_x = parseInt(inputInfo['panel_width']) / 39.37; // in meters
+    let rating = parseInt(inputInfo["wattage"]); // in Watts
+    let ratingKw = parseFloat(rating.toFixed(2)) / 1000; // In kW
+    let derate = parseFloat(inputInfo["derating_factor"]); // A float
+    let panel_y = parseInt(inputInfo["panel_length"]) / 39.37; // in meters
+    let panel_x = parseInt(inputInfo["panel_width"]) / 39.37; // in meters
     let panel_area = panel_y * panel_x; // in square meters
 
     // Grab the square footage to be used for paneling
-    let usableSquareFootage = ((parseInt(inputInfo['home_square_footage']) / parseInt(inputInfo['stories'])) + parseInt(inputInfo['additional_square_footage']))
-    let usableSquareMeters = usableSquareFootage / 10.764 // In meters
-    
+    let usableSquareFootage =
+      parseInt(inputInfo["home_square_footage"]) /
+        parseInt(inputInfo["stories"]) +
+      parseInt(inputInfo["additional_square_footage"]);
+    let usableSquareMeters = usableSquareFootage / 10.764; // In meters
+
     // Set starting values
     let totalOutput = 0;
 
@@ -90,169 +233,52 @@ export class DashboardComponent implements OnInit {
     let forecastOutput = forecastData;
 
     for (const [key, value] of Object.entries(forecastData)) {
-      let ghiValKw = (parseFloat(value.toFixed(2)) / 1000)
-      let output = (ratingKw * derate) * (ghiValKw / 1.00)
-      forecastOutput[key] = output
-      totalOutput += output
+      let ghiValKw = parseFloat(value.toFixed(2)) / 1000;
+      let output = ratingKw * derate * (ghiValKw / 1.0);
+      forecastOutput[key] = output;
+      totalOutput += output;
     }
 
     // totalOutput *= inputInfo.number_of_panels
-    this.populateFinances(totalOutput, forecastOutput)
+    this.populateFinances(totalOutput, forecastOutput);
 
-    
     // Need some integral calculation here
     // Basically - each value of GHI is good for the following 60 minutes
     // And generates that 30 minutes of power in kWh
     this.setCharts(forecastData);
   }
 
+  getNsrbData(stepper: MatStepper) {
+    // y flask debug not secured???? >:(
+    const formData = this.getInputsTheNgWay();
+    const apiUri = "http://localhost:8000/getNSRDBData";
 
+    console.log(
+      "[DashboardComponent.getnsrbData()] formData to be sent",
+      formData
+    );
 
-  // startAnimationForLineChart(chart) {
-  //   let seq: any, delays: any, durations: any;
-  //   seq = 0;
-  //   delays = 80;
-  //   durations = 500;
+    const getNsrbData$ = this._httpClient.post(apiUri, formData);
 
-  //   chart.on("draw", function (data) {
-  //     if (data.type === "line" || data.type === "area") {
-  //       data.element.animate({
-  //         d: {
-  //           begin: 600,
-  //           dur: 700,
-  //           from: data.path
-  //             .clone()
-  //             .scale(1, 0)
-  //             .translate(0, data.chartRect.height())
-  //             .stringify(),
-  //           to: data.path.clone().stringify(),
-  //           easing: Chartist.Svg.Easing.easeOutQuint,
-  //         },
-  //       });
-  //     } else if (data.type === "point") {
-  //       seq++;
-  //       data.element.animate({
-  //         opacity: {
-  //           begin: seq * delays,
-  //           dur: durations,
-  //           from: 0,
-  //           to: 1,
-  //           easing: "ease",
-  //         },
-  //       });
-  //     }
-  //   });
+    getNsrbData$.subscribe((response) => {
+      console.log(
+        "[DashboardComponent.getNsrbData()] response received",
+        response
+      );
 
-  //   seq = 0;
-  // }
-  // startAnimationForBarChart(chart) {
-  //   let seq2: any, delays2: any, durations2: any;
+      stepper.next();
+    });
+  }
 
-  //   seq2 = 0;
-  //   delays2 = 80;
-  //   durations2 = 500;
-  //   chart.on("draw", function (data) {
-  //     if (data.type === "bar") {
-  //       seq2++;
-  //       data.element.animate({
-  //         opacity: {
-  //           begin: seq2 * delays2,
-  //           dur: durations2,
-  //           from: 0,
-  //           to: 1,
-  //           easing: "ease",
-  //         },
-  //       });
-  //     }
-  //   });
+  onSelect(data): void {
+    console.log("Item clicked", JSON.parse(JSON.stringify(data)));
+  }
 
-  //   seq2 = 0;
-  // }
-  ngOnInit() {
-    /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
+  onActivate(data): void {
+    console.log("Activate", JSON.parse(JSON.stringify(data)));
+  }
 
-    // const dataDailySalesChart: any = {
-    //   labels: ["M", "T", "W", "T", "F", "S", "S"],
-    //   series: [[12, 17, 7, 17, 23, 18, 38]],
-    // };
-
-    // const optionsDailySalesChart: any = {
-    //   lineSmooth: Chartist.Interpolation.cardinal({
-    //     tension: 0,
-    //   }),
-    //   low: 0,
-    //   high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-    //   chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
-    // };
-
-    // var dailySalesChart = new Chartist.Line(
-    //   "#dailySalesChart",
-    //   dataDailySalesChart,
-    //   optionsDailySalesChart
-    // );
-
-    // this.startAnimationForLineChart(dailySalesChart);
-
-    /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
-
-    // const dataCompletedTasksChart: any = {
-    //   labels: ["12p", "3p", "6p", "9p", "12p", "3a", "6a", "9a"],
-    //   series: [[230, 750, 450, 300, 280, 240, 200, 190]],
-    // };
-
-    // const optionsCompletedTasksChart: any = {
-    //   lineSmooth: Chartist.Interpolation.cardinal({
-    //     tension: 0,
-    //   }),
-    //   low: 0,
-    //   high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-    //   chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
-    // };
-
-    // var completedTasksChart = new Chartist.Line(
-    //   "#completedTasksChart",
-    //   dataCompletedTasksChart,
-    //   optionsCompletedTasksChart
-    // );
-
-    // start animation for the Completed Tasks Chart - Line Chart
-    // this.startAnimationForLineChart(completedTasksChart);
-
-    /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
-
-    // var datawebsiteViewsChart = {
-    //   labels: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
-    //   series: [[542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]],
-    // };
-    // var optionswebsiteViewsChart = {
-    //   axisX: {
-    //     showGrid: false,
-    //   },
-    //   low: 0,
-    //   high: 1000,
-    //   chartPadding: { top: 0, right: 5, bottom: 0, left: 0 },
-    // };
-    // var responsiveOptions: any[] = [
-    //   [
-    //     "screen and (max-width: 640px)",
-    //     {
-    //       seriesBarDistance: 5,
-    //       axisX: {
-    //         labelInterpolationFnc: function (value) {
-    //           return value[0];
-    //         },
-    //       },
-    //     },
-    //   ],
-    // ];
-    // var websiteViewsChart = new Chartist.Bar(
-    //   "#websiteViewsChart",
-    //   datawebsiteViewsChart,
-    //   optionswebsiteViewsChart,
-    //   responsiveOptions
-    // );
-
-    // //start animation for the Emails Subscription Chart
-    // this.startAnimationForBarChart(websiteViewsChart);
+  onDeactivate(data): void {
+    console.log("Deactivate", JSON.parse(JSON.stringify(data)));
   }
 }

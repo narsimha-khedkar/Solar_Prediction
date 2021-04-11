@@ -1,7 +1,7 @@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 
 import { AppRoutingModule } from "./app.routing";
@@ -23,6 +23,10 @@ import {
   NgxGoogleAnalyticsModule,
   NgxGoogleAnalyticsRouterModule,
 } from "ngx-google-analytics";
+import { LoadingSpinnerModule } from "./loading-spinner/loading-spinner.module";
+import { LoaderService } from "./services/loader.service";
+import { LoaderInterceptor } from "./interceptors/loader-interceptor.service";
+import { MatStepperModule } from "@angular/material/stepper";
 
 @NgModule({
   imports: [
@@ -38,9 +42,14 @@ import {
     AgmCoreModule.forRoot({
       apiKey: "YOUR_GOOGLE_MAPS_API_KEY",
     }),
+    LoadingSpinnerModule,
+    MatStepperModule,
   ],
   declarations: [AppComponent, AdminLayoutComponent],
-  providers: [],
+  providers: [
+    LoaderService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
