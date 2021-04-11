@@ -51,7 +51,7 @@ def getNSRDBData():
     zip = request.json.get('zip')
 
     getLocationRequest = houseNumber + ' ' + streetName + ', ' + city + ', ' + state + ', ' + zip
-    location =  getLocation()
+    location =  getLocation(getLocationRequest)
     #lat = location.latitude
     #lon =  location.latitude
     lat, lon =  location['latitude'],location['longitude'] 

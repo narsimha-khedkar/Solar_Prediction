@@ -3,6 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { MatStepper } from "@angular/material/stepper";
 
 import { GoogleAnalyticsService } from "ngx-google-analytics";
+import { Subject } from "rxjs";
 
 @Component({
   selector: "app-dashboard",
@@ -19,6 +20,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {}
 
+  refreshChartData$: Subject<any> = new Subject();
   // home inputs
   houseNumber: string = "";
   streetName: string = "";
@@ -49,9 +51,11 @@ export class DashboardComponent implements OnInit {
   yAxis: boolean = true;
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = "Year";
-  yAxisLabel: string = "Population";
+  xAxisLabel: string = "Date";
+  yAxisLabel: string = "GHI";
   timeline: boolean = true;
+
+  nsrbResponse: any = {};
 
   colorScheme = {
     domain: ["#5AA454", "#E44D25", "#CFC0BB", "#7aa3e5", "#a8385d", "#aae3f5"],
@@ -59,70 +63,8 @@ export class DashboardComponent implements OnInit {
 
   chartData = [
     {
-      name: "Germany",
-      series: [
-        {
-          name: "1990",
-          value: 62000000,
-        },
-        {
-          name: "2010",
-          value: 73000000,
-        },
-        {
-          name: "2011",
-          value: 89400000,
-        },
-      ],
-    },
-
-    {
-      name: "USA",
-      series: [
-        {
-          name: "1990",
-          value: 250000000,
-        },
-        {
-          name: "2010",
-          value: 309000000,
-        },
-        {
-          name: "2011",
-          value: 311000000,
-        },
-      ],
-    },
-
-    {
-      name: "France",
-      series: [
-        {
-          name: "1990",
-          value: 58000000,
-        },
-        {
-          name: "2010",
-          value: 50000020,
-        },
-        {
-          name: "2011",
-          value: 58000000,
-        },
-      ],
-    },
-    {
-      name: "UK",
-      series: [
-        {
-          name: "1990",
-          value: 57000000,
-        },
-        {
-          name: "2010",
-          value: 62000000,
-        },
-      ],
+      name: "GHI Prediction",
+      series: [],
     },
   ];
 
@@ -145,9 +87,9 @@ export class DashboardComponent implements OnInit {
   }
 
   testCall() {
-    this._httpClient.get('http://localhost:5000/greetings').subscribe(res =>{ 
-      console.log(res)
-    })
+    this._httpClient.get("http://localhost:5000/greetings").subscribe((res) => {
+      console.log(res);
+    });
   }
 
   getInputsTheNgWay() {
@@ -271,6 +213,28 @@ export class DashboardComponent implements OnInit {
         "[DashboardComponent.getNsrbData()] response received",
         response
       );
+
+      const predictionData = {
+        name: "GHI Prediction",
+        series: [],
+      };
+
+      console.log(
+        '[DashboardComponent.getNsrbData()] Object.keys(response["ds"])',
+        Object.keys(response["ds"])
+      );
+
+      predictionData.series = Object.keys(response["ds"]).map((key) => {
+        return { name: response["ds"][key], value: response["yhat"][key] };
+      });
+
+      console.log(
+        "[DashboardComponent.getNsrbData()] predictionData",
+        predictionData
+      );
+
+      this.chartData[0].series.length = 0;
+      this.chartData[0].series.push(...predictionData.series);
 
       stepper.next();
     });
