@@ -1,8 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { MatStepper } from "@angular/material/stepper";
+import { ChartType } from "angular-google-charts";
+
 import { GoogleAnalyticsService } from "ngx-google-analytics";
-import { Subject } from "rxjs";
+import { ELECTRICITY_DATA } from "./electricity-data";
 
 @Component({
   selector: "app-dashboard",
@@ -19,7 +21,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {}
 
-  refreshChartData$: Subject<any> = new Subject();
   // home inputs
   houseNumber: string = "";
   streetName: string = "";
@@ -39,33 +40,11 @@ export class DashboardComponent implements OnInit {
   numberOfPanels: number = 1;
 
   // chart data
-  multi: any[];
-  view: any[] = [700, 300];
+  chartType = ChartType.LineChart;
+  chartData = [];
 
-  // options
-  legend: boolean = true;
-  showLabels: boolean = true;
-  animations: boolean = true;
-  xAxis: boolean = true;
-  yAxis: boolean = true;
-  showYAxisLabel: boolean = true;
-  showXAxisLabel: boolean = true;
-  xAxisLabel: string = "Date";
-  yAxisLabel: string = "GHI";
-  timeline: boolean = true;
-
-  nsrbResponse: any = {};
-
-  colorScheme = {
-    domain: ["#5AA454", "#E44D25", "#CFC0BB", "#7aa3e5", "#a8385d", "#aae3f5"],
-  };
-
-  chartData = [
-    {
-      name: "GHI Prediction",
-      series: [],
-    },
-  ];
+  ogChartType = ChartType.LineChart;
+  ogChartData = [];
 
   getInputs(whichInputs?: Array<string>): object {
     const response = {};
@@ -142,7 +121,7 @@ export class DashboardComponent implements OnInit {
   }
 
   populateFinances(state, totalOutput: number, forecastOutput: object) {
-    const averages = require('electricity_data')
+    const averages = ELECTRICITY_DATA;
 
     const costPerKWH = 0.11;
     const saved = (costPerKWH * totalOutput).toFixed(2);
@@ -150,16 +129,19 @@ export class DashboardComponent implements OnInit {
     document.getElementById("output").innerHTML = totalOutput.toFixed(2);
   }
 
-  setCharts(data: object) {
-    return;
+  setCharts(data: any) {
+    this.chartData = Object.values(data).map((value: any) => {
+      return [value.name, value.value];
+    });
+    console.log("predicted data", this.chartData);
   }
 
-  doMath(): void {
+  doMath(forecastData): void {
     // Get the user's address and panel information
     // const inputInfo = this.getInputs();
-    const inputInfo = this.getInputsTheNgWay()
+    const inputInfo = this.getInputsTheNgWay();
     // Pass the input info to the API which will send back forecasting data
-    const forecastData = this.getForecastingData(inputInfo);
+    // const forecastData = this.getForecastingData(inputInfo);
 
     // Grab and convert the panel data
     let rating = inputInfo.wattage; // in Watts
@@ -171,8 +153,7 @@ export class DashboardComponent implements OnInit {
 
     // Grab the square footage to be used for paneling
     let usableSquareFootage =
-      inputInfo.homeSquareFootage /
-        inputInfo.homeStories +
+      inputInfo.homeSquareFootage / inputInfo.homeStories +
       inputInfo.additionalFootage;
     let usableSquareMeters = usableSquareFootage / 10.764; // In meters
 
@@ -182,20 +163,21 @@ export class DashboardComponent implements OnInit {
     // Get ready to build the forecast output object
     let forecastOutput = forecastData;
 
-    for (const [key, value] of Object.entries(forecastData)) {
-      let ghiValKw = parseFloat(value.toFixed(2)) / 1000;
+    // for (const [key, value] of Object.entries(forecastData)) {
+    for (let i = 0; i < forecastData.length; i++) {
+      let ghiValKw = forecastData[i].value / 1000;
       let output = ratingKw * derate * (ghiValKw / 1.0);
-      forecastOutput[key] = output;
+      forecastOutput[i].value = output;
       totalOutput += output;
     }
 
-    totalOutput *= inputInfo.numberOfPanels
+    totalOutput *= inputInfo.numberOfPanels;
     this.populateFinances(inputInfo.state, totalOutput, forecastOutput);
 
     // Need some integral calculation here
     // Basically - each value of GHI is good for the following 60 minutes
     // And generates that 30 minutes of power in kWh
-    this.setCharts(forecastData);
+    this.setCharts(forecastOutput);
   }
 
   getNsrbData(stepper: MatStepper) {
@@ -211,32 +193,20 @@ export class DashboardComponent implements OnInit {
     const getNsrbData$ = this._httpClient.post(apiUri, formData);
 
     getNsrbData$.subscribe((response) => {
-      console.log(
-        "[DashboardComponent.getNsrbData()] response received",
-        response
-      );
-
-      const predictionData = {
-        name: "GHI Prediction",
-        series: [],
-      };
-
-      console.log(
-        '[DashboardComponent.getNsrbData()] Object.keys(response["ds"])',
-        Object.keys(response["ds"])
-      );
-
-      predictionData.series = Object.keys(response["ds"]).map((key) => {
+      const predictionData = Object.keys(response["ds"]).map((key) => {
         return { name: response["ds"][key], value: response["yhat"][key] };
       });
+
+      this.ogChartData = Object.values(predictionData).map((value: any) => {
+        return [value.name, value.value];
+      });
+
+      this.doMath(predictionData);
 
       console.log(
         "[DashboardComponent.getNsrbData()] predictionData",
         predictionData
       );
-
-      this.chartData[0].series.length = 0;
-      this.chartData[0].series.push(...predictionData.series);
 
       stepper.next();
     });

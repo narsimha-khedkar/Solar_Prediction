@@ -212,15 +212,8 @@
                 </div>
               </div>
               <div>
-                <button
-                  class="btn btn-primary"
-                  (click)="doMath()"
-                  id="do_calculation"
-                >
-                  Perform Profitability Estimation
-                </button>
                 <button class="btn btn-primary" (click)="getNsrbData(stepper)">
-                  Send It!
+                  Perform Profitability Estimation
                 </button>
               </div>
             </div>
@@ -231,24 +224,32 @@
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header card-header-warning">
+                    Predicted Daily GHI
+                  </div>
+                  <div class="card-body mr-2" style="display: grid">
+                    <google-chart
+                      [type]="ogChartType"
+                      [data]="ogChartData"
+                      [dynamicResize]="true"
+                      style="width: 100%"
+                    ></google-chart>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header card-header-warning">
                     Break-Even Point Estimate
                   </div>
                   <div class="card-body mr-2" style="display: grid">
-                    <ngx-charts-line-chart
-                      [scheme]="colorScheme"
-                      [showXAxisLabel]="showXAxisLabel"
-                      [showYAxisLabel]="showYAxisLabel"
-                      [xAxis]="xAxis"
-                      [yAxis]="yAxis"
-                      [xAxisLabel]="xAxisLabel"
-                      [yAxisLabel]="yAxisLabel"
-                      [timeline]="timeline"
-                      [results]="chartData"
-                      (select)="onSelect($event)"
-                      (activate)="onActivate($event)"
-                      (deactivate)="onDeactivate($event)"
-                    >
-                    </ngx-charts-line-chart>
+                    <google-chart
+                      [type]="chartType"
+                      [data]="chartData"
+                      [dynamicResize]="true"
+                      style="width: 100%"
+                    ></google-chart>
                   </div>
                 </div>
               </div>

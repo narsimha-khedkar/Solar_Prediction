@@ -19,7 +19,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatSelectModule } from "@angular/material/select";
 import { MatStepperModule } from "@angular/material/stepper";
 import { CdkStepperModule } from "@angular/cdk/stepper";
-import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { GoogleChartsModule } from "angular-google-charts";
 
 @NgModule({
   imports: [
@@ -35,7 +35,7 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
     MatTooltipModule,
     CdkStepperModule,
     MatStepperModule,
-    NgxChartsModule,
+    GoogleChartsModule,
   ],
   declarations: [
     DashboardComponent,
