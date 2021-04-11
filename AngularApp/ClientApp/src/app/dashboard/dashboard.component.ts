@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 // import * as Chartist from "chartist";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
@@ -8,7 +9,7 @@ import { GoogleAnalyticsService } from "ngx-google-analytics";
   styleUrls: ["./dashboard.component.css"],
 })
 export class DashboardComponent implements OnInit {
-  constructor(private _gaService: GoogleAnalyticsService) {
+  constructor(private _gaService: GoogleAnalyticsService, private _httpClient: HttpClient) {
     this._gaService.pageView("/dashboard", "Solar Prediction Dashboard");
   }
   getInputs(whichInputs?: Array<string>): object {
@@ -22,6 +23,12 @@ export class DashboardComponent implements OnInit {
       })
     })
     return response
+  }
+
+  testCall() {
+    this._httpClient.get('http://localhost:5000/greetings').subscribe(res =>{ 
+      console.log(res)
+    })
   }
 
   getForecastingData(inputInfo: object): object {
