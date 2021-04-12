@@ -89,8 +89,8 @@ def getNSRDBData():
     prophet_frame_new['ds']=pd.to_datetime(prophet_frame_new.ds)
 
     #Limit GHI values between 8 am to 8 pm to better forecast in this time period
-    prophet_frame_new = prophet_frame_new[prophet_frame_new['ds'].dt.hour >=8 ]
-    prophet_frame_new = prophet_frame_new[prophet_frame_new['ds'].dt.hour <= 20]
+    prophet_frame_new = prophet_frame_new[prophet_frame_new['ds'].dt.hour >=4 ]
+    prophet_frame_new = prophet_frame_new[prophet_frame_new['ds'].dt.hour <= 16]
 
     #prophet_frame_new.plot(x='ds',y='y',figsize=(12,8),legend=True,label='GHI Values',xlim=('2016-01-01','2020-01-01'))
     
@@ -105,8 +105,8 @@ def getNSRDBData():
     future2['ds']=pd.to_datetime(future2.ds)
     
     #Discard forecasted timeperiod between 8 am to 8 pm to better forecast in this time period
-    future2 = future2[future2['ds'].dt.hour >=8 ]
-    future2 = future2[future2['ds'].dt.hour <= 20]
+    future2 = future2[future2['ds'].dt.hour >=4 ]
+    future2 = future2[future2['ds'].dt.hour <= 16]
 
     #Discard rows with negative forecasting
     fcst = m.predict(future2)

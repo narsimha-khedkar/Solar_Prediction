@@ -28,9 +28,6 @@ export class DashboardComponent implements OnInit {
   city: string = "";
   state: string = "";
   zip: string = "";
-  homeSquareFootage: number = 0;
-  additionalFootage: number = 0;
-  homeStories: number = 1;
 
   // panel inputs
   wattage: number = 275;
@@ -38,6 +35,9 @@ export class DashboardComponent implements OnInit {
   panelLength: number = 65;
   panelWidth: number = 39;
   numberOfPanels: number = 1;
+
+  firstDate = "";
+  lastDate = "";
 
   // chart data
   chartType = ChartType.LineChart;
@@ -78,9 +78,6 @@ export class DashboardComponent implements OnInit {
       city: this.city.toUpperCase(),
       state: this.state.toUpperCase(),
       zip: this.zip,
-      additionalFootage: this.additionalFootage,
-      homeSquareFootage: this.homeSquareFootage,
-      homeStories: this.homeStories,
       wattage: this.wattage,
       deratingFactor: this.deratingFactor,
       panelLength: this.panelLength,
@@ -120,10 +117,14 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  populateFinances(state, totalOutput: number, forecastOutput: object) {
+  populateFinances(state, totalOutput: number) {
     const averages = ELECTRICITY_DATA;
 
-    const costPerKWH = 0.11;
+    const stateElectricityData = averages.filter(
+      (avg) => avg.State.toUpperCase() === state.toUpperCase()
+    )[0];
+
+    const costPerKWH = stateElectricityData.Price / 100;
     const saved = (costPerKWH * totalOutput).toFixed(2);
     document.getElementById("savings").innerHTML = saved;
     document.getElementById("output").innerHTML = totalOutput.toFixed(2);
@@ -151,12 +152,6 @@ export class DashboardComponent implements OnInit {
     let panel_x = inputInfo.panelWidth / 39.37; // in meters
     let panel_area = panel_y * panel_x; // in square meters
 
-    // Grab the square footage to be used for paneling
-    let usableSquareFootage =
-      inputInfo.homeSquareFootage / inputInfo.homeStories +
-      inputInfo.additionalFootage;
-    let usableSquareMeters = usableSquareFootage / 10.764; // In meters
-
     // Set starting values
     let totalOutput = 0;
 
@@ -171,8 +166,11 @@ export class DashboardComponent implements OnInit {
       totalOutput += output;
     }
 
+    this.firstDate = forecastData[0].name;
+    this.lastDate = forecastData[forecastData.length - 1].name;
+    totalOutput *= panel_area;
     totalOutput *= inputInfo.numberOfPanels;
-    this.populateFinances(inputInfo.state, totalOutput, forecastOutput);
+    this.populateFinances(inputInfo.state, totalOutput);
 
     // Need some integral calculation here
     // Basically - each value of GHI is good for the following 60 minutes

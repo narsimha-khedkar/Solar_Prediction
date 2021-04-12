@@ -70,51 +70,6 @@
                           [(ngModel)]="zip"
                         />
                       </div>
-                      <div id="home_square_footage">
-                        <label class="form-label" for="home_footage"
-                          >Home Square Footage</label
-                        >
-                        <input
-                          class="form-control"
-                          name="home_footage"
-                          type="number"
-                          min="0"
-                          max="10000"
-                          value="2000"
-                          id="home_square_footage"
-                          [(ngModel)]="homeSquareFootage"
-                        />
-                      </div>
-                      <div id="additional_footage">
-                        <label class="form-label" for="additional"
-                          >Additional Square Footage</label
-                        >
-                        <input
-                          class="form-control"
-                          name="additional"
-                          type="number"
-                          min="0"
-                          max="10000"
-                          value="500"
-                          id="additional_square_footage"
-                          [(ngModel)]="additionalFootage"
-                        />
-                      </div>
-                      <div id="home_stories">
-                        <label class="form-label" for="stories"
-                          >Home Stories</label
-                        >
-                        <input
-                          class="form-control"
-                          name="stories"
-                          type="number"
-                          min="1"
-                          max="5"
-                          value="1"
-                          id="stories"
-                          [(ngModel)]="homeStories"
-                        />
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -224,29 +179,16 @@
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header card-header-warning">
-                    Predicted Daily GHI
-                  </div>
-                  <div class="card-body mr-2" style="display: grid">
-                    <google-chart
-                      [type]="ogChartType"
-                      [data]="ogChartData"
-                      [dynamicResize]="true"
-                      style="width: 100%"
-                    ></google-chart>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header card-header-warning">
-                    Break-Even Point Estimate
+                    Hourly Output in kilowatt-hours
                   </div>
                   <div class="card-body mr-2" style="display: grid">
                     <google-chart
                       [type]="chartType"
                       [data]="chartData"
+                      [options]="{
+                        hAxis: { title: 'Date' },
+                        vAxis: { title: 'Dollars' }
+                      }"
                       [dynamicResize]="true"
                       style="width: 100%"
                     ></google-chart>
@@ -254,7 +196,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
@@ -264,8 +206,10 @@
                   <div class="card-body table-responsive">
                     <div id="profitability_outputs">
                       <div>
-                        You'll save $<span id="savings">[[ costSavings ]]</span> throughout the
-                        course of the forecasting data.
+                        You'll save $<span id="savings">[[ costSavings ]]</span>
+                        from {{ firstDate | date: "MMMM d, yyyy" }} to
+                        {{ lastDate | date: "MMMM d, yyyy" }} over course of the
+                        forecasting data.
                       </div>
                       <div>
                         Your panels will generate an output of
@@ -276,7 +220,6 @@
                 </div>
               </div>
             </div>
-
           </mat-step>
         </mat-horizontal-stepper>
       </div>
