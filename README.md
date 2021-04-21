@@ -87,6 +87,9 @@ You should have all of the python dependencies installed. Next you'll need to cl
 
 You now have cloned all of the code artifacts of our project. Next we need to assign the PythonAPI Visual Studio project the Anaconda Environment we created earlier.
 
+If you ran into issues while cloning, make sure that you have installed git and have been granted access to the repo. Please contact barnhouset09@gmail.com requesting for access.
+If git wasn't installed, make sure to have restarted your computer after installation.
+
 #
 
 #
