@@ -112,7 +112,7 @@ Now the PythonApp Flask Web API project should be able to successfully reference
 
 #
 
-### Install AngularApp Dependencies
+# Install AngularApp Dependencies
 
 To install the AngularApp npm dependencies, we need to open the angular clientApp code folder in `Visual Studio Code` (NOT Visual Studio Community). To do this quickly:
 
