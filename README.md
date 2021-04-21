@@ -46,7 +46,7 @@ An Anaconda environment is the best way to install the fbProphet packages that o
 4. Run the command `conda install -c conda-forge fbprophet` to install the fbProphet package, it will output a list of other packages it is dependent on and ask confirmation for installing those as well. Confirm to install everything:
    ![picture 4](images/fbprophet_dependencies.png)
 
-   It should fbProphet and all of its dependencies:
+   It should install fbProphet and all of its dependencies:
    ![picture 6](images/fbprophet_dep_install.png)
 
 5. Repeat the `conda install` command for the following packages:
