@@ -62,6 +62,8 @@ An Anaconda environment is the best way to install the fbProphet packages that o
      - `conda install -c anaconda pandas`
    - matplotlib
      - `conda install -c conda-forge matplotlib`
+   - IPython
+     - `conda install -c anaconda ipython`
 
 You should have all of the python dependencies installed. Next you'll need to clone the repo.
 
