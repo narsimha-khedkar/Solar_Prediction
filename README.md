@@ -107,9 +107,12 @@ To assign the Anaconda environment we created,
    ![picture 11](images/props_pyproj_tab.png)
 
 3. Make sure to Save by either pressing `CTRL + S` or by clicking the `Save` button in Visual Studio:
+
    ![picture 12](images/save.png)
 
-Now the PythonApp Flask Web API project should be able to successfully reference the Python packages and execute correctly. Next we need to get the Angular front-end project's dependencies set up.
+Now the PythonApp Flask Web API project should be able to successfully reference the Python packages and execute correctly. 
+
+Next we need to get the Angular front-end project's dependencies set up.
 
 #
 
