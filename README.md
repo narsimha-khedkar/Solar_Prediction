@@ -1,6 +1,10 @@
 # Welcome
 
-This is the repository for the ECU Spring 2021 CSCI 6010 Solar Energy Prediction Project.
+This is the repository for the Solar Energy Prediction Project.
+
+#Abstract
+For this project we have built a web platform that allows interested parties to predict the amount of solar energy that can be collected at a given residential address. It consists of a website and a REST API, where the website provides a form for the user-entered address data which is then sent to the REST API to formulate solar prediction data. Our predictions utilize a powerful time-series forecasting library from Facebook called Prophet, and the predictions it makes are based on Global Horizontal Irradiance (GHI) data collected by the US National Renewable Energy Laboratory (NREL) in the publicly available National Solar Radiation Database (NSRDB). After users have supplied their residence information, they are provided an informative dashboard that forecasts their predicted hourly solar energy generation once the prediction is completed. This dashboard also provides costsavings information over the course of the next year starting from the time the user submits their address.
+
 
 Please read the step-by-step instructions below to get up and running with the applications.
 
