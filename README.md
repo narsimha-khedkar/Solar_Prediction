@@ -208,11 +208,9 @@ responds to the uncertainty bands.
    ![picture 26](images/2019_Test_FCST.PNG)
 
 #### Figure 2 - Forecasting 2019 data using Prophet. Black dots are the observed data from 2016 to 2019. Blue line in the graph indicates the forecast/fitted curve and the light blue shaded region corresponds to the uncertainty bands. As you see here Prophet was able to train and predict the overall trend.
-
 <br>
 
 # Modeling using Hourly Data
-
 After modeling the forecasting using daily data we realized that for energy calculations, its more appropriate to have hourly predictions in order to better calculate profitability. As you see in Figure 3, we used an similar approach to modeling the hourly data as we did with the daily data. Models 1 and 4 indicated by the yellow and red graphs respectively and they seem to overfit the Observed data. Model 2 indicated by the blue graph and has a better over all fit but still does not account for the sudden changes. Model 3 indicated by the green graph seems to have better fit and accounts for sudden changes in some of the months in respect to the observed data.
 
 Thus, we will be using Model 3 going forward in our forecasting and energy profitability calculations.
@@ -220,9 +218,7 @@ Thus, we will be using Model 3 going forward in our forecasting and energy profi
    ![picture 27](images/Daily_FCST.png)
 
 #### Figure 3 - Data Modeling the GHI Daily Values using Prophet - Prophet provides tunable parameters to better fit the training data to test data. This figure depicts how with each model we were able to get closer to the test data.
-
 <br>
-
 
 # Results
 Our final product included a user interface built on Angular that interacted with a
@@ -233,7 +229,6 @@ is considering for purchase. After retrieving the relevant irradiance data, we w
 This was done by fitting the dataset on the Prophet model once we had retrieved it.
 We then used this model to predict future data as you can see in figure 15. The output
 from Prophet is a Panda’s Dataframe which has the ˆy or the forecasted GHI Hourly values.
-
 <br>
 
 # SolarPredict User Interface
